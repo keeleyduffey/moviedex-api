@@ -24,25 +24,23 @@ function handleGetMovie(req, res) {
 
 	const genre = req.query.genre && req.query.genre.toLowerCase();
 	const country = req.query.country && req.query.country.toLowerCase();
-	const averageVote = Number(req.query.averageVote);
+	const avg_vote = Number(req.query.avg_vote);
 
-	let response = [];
+	let response = MOVIES;
 	if (genre) {
-		response = MOVIES.filter(movie =>
+		response = response.filter(movie =>
 			movie.genre.toLowerCase().includes(genre));
 	}
 
 	if (country) {
-		response = MOVIES.filter(movie =>
+		response = response.filter(movie =>
 			movie.country.toLowerCase().includes(country));
 	}
 
-	if (averageVote) {
-		response = MOVIES.filter(movie =>
-			movie.avg_vote >= averageVote);
+	if (avg_vote) {
+		response = response.filter(movie =>
+			movie.avg_vote >= avg_vote);
 	}
-
-	if (!genre && !country && !averageVote) response = MOVIES;
 
 	return res.json(response);
 }
